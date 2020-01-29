@@ -21,20 +21,20 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Entidad de la tabla K_LOG
+ * Entidad de la tabla K_REMOTE_SERVICE
  * 
  * @author gsegura
  */
 @Entity
-@Table(name = "K_LOG")
-public class LogDO extends AbstractEntity<LogDO>
+@Table(name = "K_REMOTE_SERVICE")
+public class RemoteServiceDO extends AbstractEntity<RemoteServiceDO>
 {
 
-  private static final long serialVersionUID = -3546207316472608039L;
+  private static final long serialVersionUID = 6557217717718168351L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ID_LOG")
+  @Column(name = "ID_REMOTE_SERVICE")
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -152,7 +152,7 @@ public class LogDO extends AbstractEntity<LogDO>
   }
 
   @Override
-  public int compareTo( LogDO that )
+  public int compareTo( RemoteServiceDO that )
   {
     return new CompareToBuilder().append( this.id, that.id ).toComparison();
   }
@@ -168,7 +168,7 @@ public class LogDO extends AbstractEntity<LogDO>
     }
     else if( object != null && object.getClass().equals( this.getClass() ) )
     {
-      LogDO that = (LogDO) object;
+      RemoteServiceDO that = (RemoteServiceDO) object;
       isEquals = new EqualsBuilder().append( this.id, that.id ).isEquals();
     }
     return isEquals;

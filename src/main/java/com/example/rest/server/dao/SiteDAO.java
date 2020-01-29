@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.example.rest.server.model.SiteDO;
 
 /**
- * Interface DAO para la entidad SiteDO
+ * Interface DAO para la entidad {@link com.example.rest.server.model.SiteDO}
  * 
  * @author gsegura
  */

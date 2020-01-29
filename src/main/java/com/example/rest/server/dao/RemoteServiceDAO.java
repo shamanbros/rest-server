@@ -8,14 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.rest.server.model.LogDO;
+import com.example.rest.server.model.RemoteServiceDO;
 
 /**
- * Interface DAO para la entidad {@link com.example.rest.server.model.LogDO}
+ * Interface DAO para la entidad {@link com.example.rest.server.model.RemoteServiceDOs}
  * 
  * @author gsegura
  */
 @Repository
-public interface LogDAO extends JpaRepository<LogDO, Long>
+public interface RemoteServiceDAO extends JpaRepository<RemoteServiceDO, Long>
 {
 
   /**
@@ -25,8 +26,8 @@ public interface LogDAO extends JpaRepository<LogDO, Long>
    * @param pageable criterio de paginación y ordenamiento
    * @return una página con los registros que cumplan el criterio
    */
-  @Query("SELECT o FROM LogDO o WHERE o.site.id = :siteId")
-  Page<LogDO> findBySiteId( @Param("siteId") Long siteId, Pageable pageable );
+  @Query("SELECT o FROM RemoteServiceDO o WHERE o.site.id = :siteId")
+  Page<RemoteServiceDO> findBySiteId( @Param("siteId") Long siteId, Pageable pageable );
 
   /**
    * Busca el registro por UUID
@@ -34,6 +35,6 @@ public interface LogDAO extends JpaRepository<LogDO, Long>
    * @param uuid
    * @return
    */
-  @Query("SELECT o FROM LogDO o WHERE o.uuid = :uuid")
-  LogDO findByUuid( @Param("uuid") String uuid );
+  @Query("SELECT o FROM RemoteServiceDO o WHERE o.uuid = :uuid")
+  RemoteServiceDO findByUuid( @Param("uuid") String uuid );
 }
