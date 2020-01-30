@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,7 +69,7 @@ public class SiteController
    * @param site
    */
   @PostMapping("/sites")
-  public ResponseEntity save( SiteTO site )
+  public ResponseEntity save( @RequestBody SiteTO site )
   {
     siteService.save( site );
     return ResponseEntity.ok().body( site );
@@ -78,7 +79,7 @@ public class SiteController
    * Actualiza la información de un sitio
    */
   @PutMapping("/sites/{id}")
-  public ResponseEntity update( SiteTO site, @PathVariable Long id )
+  public ResponseEntity update( @RequestBody SiteTO site, @PathVariable Long id )
   {
     site.setId( id );
     siteService.update( site );

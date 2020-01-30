@@ -72,10 +72,10 @@ public class SiteServiceImpl implements SiteService
   public void save( SiteTO site )
   {
     SiteDO entity = new SiteDO();
+    entity.setId( site.getId() );
     entity.setSite( site.getSite() );
     entity.setUrl( site.getUrl() );
     this.siteDAO.saveAndFlush( entity );
-    site.setId( entity.getId() );
   }
 
   /**
