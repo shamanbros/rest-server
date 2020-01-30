@@ -1,4 +1,4 @@
-package com.example.rest.server.web;
+package com.example.rest.server.web.api.v1;
 
 import java.util.List;
 
