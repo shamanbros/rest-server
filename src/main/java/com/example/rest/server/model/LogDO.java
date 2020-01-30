@@ -29,8 +29,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "K_LOG")
 public class LogDO extends AbstractEntity<LogDO>
 {
-
-  private static final long serialVersionUID = -3546207316472608039L;
+ 
+  private static final long serialVersionUID = -3868661394792642385L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,19 @@ public class LogDO extends AbstractEntity<LogDO>
 
   @Column(name = "DT_REQUEST")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date timestamp;
+  private Date tsRequest;
+  
+  
+  @Column(name = "ID_RESPONSE_CODE ")
+  private Integer responseCode;
+
+  @Lob
+  @Column(name = "DS_RESPONSE ")
+  private String response;
+
+  @Column(name = "DT_RESPONSE ")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date tsResponse;
 
   /**
    * @return the id
@@ -136,19 +148,67 @@ public class LogDO extends AbstractEntity<LogDO>
   }
 
   /**
-   * @return the timestamp
+   * @return the tsRequest
    */
-  public Date getTimestamp()
+  public Date getTsRequest()
   {
-    return timestamp;
+    return tsRequest;
   }
 
   /**
-   * @param timestamp the timestamp to set
+   * @param tsRequest the tsRequest to set
    */
-  public void setTimestamp( Date timestamp )
+  public void setTsRequest( Date tsRequest )
   {
-    this.timestamp = timestamp;
+    this.tsRequest = tsRequest;
+  }
+
+  /**
+   * @return the responseCode
+   */
+  public Integer getResponseCode()
+  {
+    return responseCode;
+  }
+
+  /**
+   * @param responseCode the responseCode to set
+   */
+  public void setResponseCode( Integer responseCode )
+  {
+    this.responseCode = responseCode;
+  }
+
+  /**
+   * @return the response
+   */
+  public String getResponse()
+  {
+    return response;
+  }
+
+  /**
+   * @param response the response to set
+   */
+  public void setResponse( String response )
+  {
+    this.response = response;
+  }
+
+  /**
+   * @return the tsResponse
+   */
+  public Date getTsResponse()
+  {
+    return tsResponse;
+  }
+
+  /**
+   * @param tsResponse the tsResponse to set
+   */
+  public void setTsResponse( Date tsResponse )
+  {
+    this.tsResponse = tsResponse;
   }
 
   @Override
@@ -184,7 +244,13 @@ public class LogDO extends AbstractEntity<LogDO>
   public String toString()
   {
     return new ToStringBuilder( this ).append( "id", this.id ).append( "site", this.site ).append( "uuid", this.uuid )
-        .append( "request", this.request ).append( "ip", this.ip ).append( "timestamp", this.timestamp ).toString();
+        .append( "ip", this.ip )
+        .append( "request", this.request )
+        .append( "tsRequest", this.tsRequest )
+        .append( "responseCode",this.responseCode )
+        .append( "response", this.response )
+        .append( "tsResponse", this.tsResponse )
+        .toString();
   }
 
 }

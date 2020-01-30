@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS K_LOG;
+DROP TABLE IF EXISTS K_REMOTE_SERVICE;
+DROP TABLE IF EXISTS K_SITE;
 
 CREATE TABLE K_SITE (
                 ID_SITE INTEGER NOT NULL,
@@ -8,7 +11,7 @@ CREATE TABLE K_SITE (
 
 
 CREATE TABLE K_REMOTE_SERVICE (
-                ID_REMOTE_SERVICE INTEGER NOT NULL,
+                ID_REMOTE_SERVICE INTEGER auto_increment NOT NULL,
                 ID_SITE INTEGER NOT NULL,
                 DS_UUID VARCHAR(36) NOT NULL,
                 DS_REQUEST NCLOB,
@@ -26,12 +29,15 @@ CREATE INDEX K_REMOTE_SERVICE_ID_SITE_IDX
  ( ID_SITE );
 
 CREATE TABLE K_LOG (
-                ID_LOG INTEGER NOT NULL,
+                ID_LOG INTEGER auto_increment NOT NULL,
                 ID_SITE INTEGER NOT NULL,
                 DS_UUID VARCHAR(36) NOT NULL,
                 DS_REQUEST NCLOB,
                 DS_IP VARCHAR(45) NOT NULL,
                 DT_REQUEST TIMESTAMP NOT NULL,
+                ID_RESPONSE_CODE INTEGER,
+                DS_RESPONSE NCLOB,
+                DT_RESPONSE TIMESTAMP,
                 CONSTRAINT K_LOG_PK PRIMARY KEY (ID_LOG)
 );
 
@@ -62,8 +68,8 @@ NOT DEFERRABLE;
 -- Data 
 
 INSERT INTO K_SITE ( ID_SITE, DS_SITE, DS_REST_URL) VALUES
-(1, 'site1', 'localhost:8080/server/process1'),
-(2, 'site1', 'localhost:8080/server/process2'),
-(3, 'site1', 'localhost:8080/server/process3'),
-(4, 'site1', 'localhost:8080/server/process4'),
-(5, 'site1', 'localhost:8080/server/process5');
+(1, 'site1', 'http://localhost:8080/server/process1'),
+(2, 'site2', 'http://localhost:8080/server/process2'),
+(3, 'site3', 'http://localhost:8080/server/process3'),
+(4, 'site4', 'http://localhost:8080/server/process4'),
+(5, 'site5', 'http://localhost:8080/server/process5');

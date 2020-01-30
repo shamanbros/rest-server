@@ -25,6 +25,7 @@ public class SiteServiceImpl implements SiteService
 
   @Autowired
   private SiteDAO siteDAO;
+  
   /**
    * {@inheritDoc}
    */

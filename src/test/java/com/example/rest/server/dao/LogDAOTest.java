@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.example.rest.server.Dummy;
 import com.example.rest.server.model.LogDO;
 import com.example.rest.server.model.SiteDO;
 import com.google.gson.Gson;
@@ -56,7 +57,7 @@ public class LogDAOTest
 
       log.setUuid( uuid.toString() );
       log.setIp( "10.10.1.1" );
-      log.setTimestamp( Calendar.getInstance().getTime() );
+      log.setTsRequest( Calendar.getInstance().getTime() );
 
       logDAO.save( log );
     }
@@ -66,7 +67,7 @@ public class LogDAOTest
   public void testFindBySiteId()
   {
 
-    Page<LogDO> paged = this.logDAO.findBySiteId( 1L, PageRequest.of( 0, 20, Sort.by( Direction.DESC, "timestamp" ) ) );
+    Page<LogDO> paged = this.logDAO.findBySiteId( 1L, PageRequest.of( 0, 20, Sort.by( Direction.DESC, "tsRequest" ) ) );
     Assert.assertNotNull( paged );
     Assert.assertTrue( paged.getSize() <= 20 );
 
@@ -78,64 +79,19 @@ public class LogDAOTest
     } );
 
   }
-  
+
   @Test
-  public void testFindByUuid() {
-    Page<LogDO> paged = this.logDAO.findAll(PageRequest.of( 0, 10, Sort.by( Direction.DESC, "id" ) ));
-    paged.get().forEach( log -> {
-      
-      LogDO logByUuid = this.logDAO.findByUuid( log.getUuid() );
-      
-      Assert.assertEquals( log.getId(), logByUuid.getId() );
-      
-    } );
-    
-  }
-
-  private static class Dummy
+  public void testFindByUuid()
   {
-    public Dummy()
-    {
-    }
+    Page<LogDO> paged = this.logDAO.findAll( PageRequest.of( 0, 10, Sort.by( Direction.DESC, "id" ) ) );
+    paged.get().forEach( log -> {
 
-    public Dummy( int id, String uddi )
-    {
-      this.id = id;
-      this.uddi = uddi;
-    }
-    private int id;
-    private String uddi;
-    /**
-     * @return the id
-     */
-    public int getId()
-    {
-      return id;
-    }
+      LogDO logByUuid = this.logDAO.findByUuid( log.getUuid() );
 
-    /**
-     * @param id the id to set
-     */
-    public void setId( int id )
-    {
-      this.id = id;
-    }
+      Assert.assertEquals( log.getId(), logByUuid.getId() );
 
-    /**
-     * @return the uddi
-     */
-    public String getUddi()
-    {
-      return uddi;
-    }
-
-    /**
-     * @param uddi the uddi to set
-     */
-    public void setUddi( String uddi )
-    {
-      this.uddi = uddi;
-    }
+    } );
 
   }
+
 }

@@ -1,6 +1,7 @@
 package com.example.rest.server.commons.to;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Clase de petición inicial
@@ -10,10 +11,11 @@ import java.io.Serializable;
 public class RequestTO implements Serializable
 {
 
-  private static final long serialVersionUID = 6413577511318407513L;
+  private static final long serialVersionUID = -7458671886007143462L;
   private String id;
   private int siteId;
   private String payload;
+
   /**
    * @return the id
    */

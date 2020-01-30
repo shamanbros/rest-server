@@ -5,6 +5,8 @@ import java.util.List;
 import com.example.rest.server.commons.to.SiteTO;
 
 /**
+ * Interface para el CRUD de sitios
+ * 
  * @author gsegura
  */
 public interface SiteService
