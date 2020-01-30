@@ -3,13 +3,9 @@ package com.example.rest.server.commons.exception;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.env.ConfigurablePropertyResolver;
-import org.springframework.stereotype.Component;
 
 /**
  * Clase builder de las excepciones
@@ -18,10 +14,14 @@ import org.springframework.stereotype.Component;
  */
 public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderConfigurer
 {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger( BusinessExceptionBuilder.class );
+  private static final String BUSINESS_EXCEPTION_PROPERTIES = "business_exception";
+  private static final String BUSINESS_EXCEPTION_CODE = "business.exception.code.";
   private static final int DEFAULT_CODE_EXCEPTION = 0;
 
   /**
-   * Constructor vacío
+   * Constructor vacío, código de error Default
    * 
    * @return
    */
@@ -31,7 +31,7 @@ public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderCo
   }
 
   /**
-   * Constructor por mensaje
+   * Constructor por mensaje y el código de error Default
    * 
    * @param message
    * @return
@@ -42,7 +42,7 @@ public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderCo
   }
 
   /**
-   * Constructor por mensaje y excepción
+   * Constructor por mensaje, excepción y el código de error Default
    * 
    * @param message
    * @param t
@@ -54,7 +54,7 @@ public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderCo
   }
 
   /**
-   * Constructor por mensaje, excepción y código
+   * Constructor por mensaje, excepción y el código de error
    * 
    * @param message
    * @param t
@@ -67,7 +67,7 @@ public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderCo
   }
 
   /**
-   * Constructor por mensaje, excepción y descripción
+   * Constructor por mensaje, excepción, descripción y el código de error
    * 
    * @param message
    * @param t
@@ -79,6 +79,49 @@ public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderCo
     return build( message, t, DEFAULT_CODE_EXCEPTION, description );
   }
 
+  /**
+   * Construye la excepción con el código de error
+   * 
+   * @param code
+   * @return
+   */
+  public static BusinessException build( int code )
+  {
+    return build( null, null, code, null );
+  }
+
+  /**
+   * Construye la excepción con la excepción y el código de error
+   * 
+   * @param t
+   * @param code
+   * @return
+   */
+  public static BusinessException build( Throwable t, int code )
+  {
+    return build( null, t, code, null );
+  }
+
+  /**
+   * Construye la excepción con la excepción y el código de error Default
+   * 
+   * @param t
+   * @return
+   */
+  public static BusinessException build( Throwable t )
+  {
+    return build( null, t, DEFAULT_CODE_EXCEPTION, null );
+  }
+
+  /**
+   * Constructor de la excepción de negocio, si la descripción es nula o vacía se busca en el archivo de propiedades
+   * 
+   * @param message
+   * @param t
+   * @param code
+   * @param description
+   * @return
+   */
   public static BusinessException build( String message, Throwable t, int code, String description )
   {
     BusinessException businessException = new BusinessException( message, t );
@@ -86,7 +129,7 @@ public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderCo
 
     if( StringUtils.isBlank( description ) )
     {
-      String key = new StringBuilder().append( "business.exception.code." ).append( code ).toString();
+      String key = new StringBuilder().append( BUSINESS_EXCEPTION_CODE ).append( code ).toString();
       businessException.setDescription( getProperty( key ) );
     }
     else
@@ -99,16 +142,16 @@ public final class BusinessExceptionBuilder extends PropertySourcesPlaceholderCo
 
   private static String getProperty( String key )
   {
-    String mensaje = "";
+    String property = "";
     try
     {
-      mensaje = ResourceBundle.getBundle( "business_exception" ).getString( key );
+      property = ResourceBundle.getBundle( BUSINESS_EXCEPTION_PROPERTIES ).getString( key );
     }
     catch( Exception e )
     {
-      mensaje = "";
+      LOGGER.error( e.getMessage(), e );
     }
-    return mensaje;
+    return property;
   }
 
 }

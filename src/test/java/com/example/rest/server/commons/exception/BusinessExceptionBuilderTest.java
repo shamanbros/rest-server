@@ -23,7 +23,7 @@ public class BusinessExceptionBuilderTest
   @Test
   public void testBuildString()
   {
-    BusinessException businessException = BusinessExceptionBuilder.build("An error has occured");
+    BusinessException businessException = BusinessExceptionBuilder.build( "An error has occured" );
     Assert.assertNotNull( businessException );
     Assert.assertEquals( 0, businessException.getCode() );
     Assert.assertNotNull( businessException.getDescription() );
@@ -32,25 +32,79 @@ public class BusinessExceptionBuilderTest
   @Test
   public void testBuildStringThrowable()
   {
-    fail( "Not yet implemented" );
+    BusinessException businessException = BusinessExceptionBuilder.build( "An error has occured",
+      new RuntimeException() );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 0, businessException.getCode() );
+    Assert.assertNotNull( businessException.getDescription() );
   }
 
   @Test
   public void testBuildStringThrowableInt()
   {
-    fail( "Not yet implemented" );
+    BusinessException businessException = BusinessExceptionBuilder.build( "An error has occured",
+      new RuntimeException(), 1 );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 1, businessException.getCode() );
+    Assert.assertNotNull( businessException.getDescription() );
   }
 
   @Test
   public void testBuildStringThrowableString()
   {
-    fail( "Not yet implemented" );
+    BusinessException businessException = BusinessExceptionBuilder.build( "An error has occured",
+      new RuntimeException(), "A description" );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 0, businessException.getCode() );
+    Assert.assertNotNull( businessException.getDescription() );
   }
 
   @Test
   public void testBuildStringThrowableIntString()
   {
-    fail( "Not yet implemented" );
+    BusinessException businessException = BusinessExceptionBuilder.build( "An error has occured",
+      new RuntimeException(), 1, "A description" );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 1, businessException.getCode() );
+    Assert.assertNotNull( businessException.getDescription() );
   }
 
+  @Test
+  public void testBuildInt()
+  {
+    BusinessException businessException = BusinessExceptionBuilder.build( 1 );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 1, businessException.getCode() );
+    Assert.assertNotNull( businessException.getDescription() );
+  }
+
+  @Test
+  public void testBuildThrowableInt()
+  {
+    BusinessException businessException = BusinessExceptionBuilder
+        .build( new RuntimeException( "An error has occured" ), 1 );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 1, businessException.getCode() );
+    Assert.assertNotNull( businessException.getDescription() );
+  }
+
+  @Test
+  public void testBuildThrowable()
+  {
+    BusinessException businessException = BusinessExceptionBuilder
+        .build( new RuntimeException( "An error has occured" ) );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 0, businessException.getCode() );
+    Assert.assertNotNull( businessException.getDescription() );
+  }
+  
+  
+  @Test
+  public void testBuild_error()
+  {
+    BusinessException businessException = BusinessExceptionBuilder.build( 100 );
+    Assert.assertNotNull( businessException );
+    Assert.assertEquals( 100, businessException.getCode() );
+    Assert.assertEquals("",  businessException.getDescription() );
+  }
 }
